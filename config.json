@@ -1,0 +1,42 @@
+{
+    "comment": "同时对齐编码器输出的特征、重构特征、重构特征经MLP处理后的特征，在 IRRA 基础上继续微调",
+    "proxy": {
+        "http": "http://localhost:7890",
+        "https": "http://localhost:7890"
+    },
+    "zsk": true,
+    "device": "cuda:2",
+    "checkPointPath": "CLIP_ZSK_S128",
+    "training": {
+        "ompSparsity": 128,
+        "dictSize": 2048,
+        "dictTrainingEpochCnt": 64,
+        "dictTrainingMomentum": 0.5,
+        "batchSize": 64,
+        "numEpoch": 60,
+        "imgTransform": "normal",
+        "shuffle": true,
+        "mlm": false,
+        "pfa": false,
+        "optimizer": {
+            "type": "Adam",
+            "lr": 1e-5,
+            "alpha": 0.9,
+            "beta": 0.999,
+            "weightDecay": 4e-5,
+            "biasWeightDecay": 0.0,
+            "lrFactor": 5.0,
+            "biasLrFactor": 2.0
+        },
+        "lrScheduler": {
+            "mode": "cosine",
+            "milestones": [20, 50],
+            "gamma": 0.1,
+            "warmupFactor": 0.1,
+            "warmupEpochs": 5,
+            "warmupMethod": "linear",
+            "targetLr": 0,
+            "power": 0.9
+        }
+    }
+}
